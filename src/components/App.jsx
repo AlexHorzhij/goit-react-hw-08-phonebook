@@ -20,6 +20,7 @@ export const App = () => {
 
    useEffect(() => {
      isLogin ? navigate("/contacts") : navigate("/login")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   useEffect(() => {
