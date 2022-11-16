@@ -1,15 +1,13 @@
-import React from 'react';
-import {Title, Section, Container, Message, ContactsCount} from './Contacts.styled';
-import { ContactForm } from '../ContactForm/ContactForm';
-import { Filter } from '../Filter/Filter';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchContacts } from 'redux/contacts/operationContacts';
-import { ContactList } from '../ContactList/ContactList';
-import { useEffect } from 'react';
 import { selectContacts } from 'redux/contacts/selectorsContacts';
 import { selectFilter } from 'redux/filter/selectorsFilter';
+import { ContactForm } from '../ContactForm/ContactForm';
+import { Filter } from '../Filter/Filter';
+import { ContactList } from '../ContactList/ContactList';
 import { Logout } from 'components/UserMenu/Logout/Logout';
-
+import { Container, Typography, Divider } from '@mui/material';
 
 export function Contacts() {
     const filter = useSelector(selectFilter);
@@ -28,22 +26,24 @@ export function Contacts() {
         return contacts.length;
     };
 
-    return <Container>
+    return <>
         <Logout/>
-        <Section>
-            <Title>Phonebook</Title>
+        <Container maxWidth="sm" sx={{mt:10}}>
+            <Typography component="h2" variant="h4" sx={{mt:3, mb:2}}>Phonebook</Typography>
             <ContactForm />
-        </Section>
-        <Section>
-            <Title>Contacts</Title>
+        </Container>
+        <Container maxWidth="sm">
+            <Typography component="h2" variant="h4" sx={{mt:3, mb:2}}>Contacts</Typography>
             <Filter />
-            <ContactsCount>You have {contactsCount()} contacts.</ContactsCount>
+
+            <Typography component="h3" variant="h6" >You have <b>{contactsCount()}</b> contacts.</Typography>
+            <Divider />
             {(filter && (filtredList().length !== 0 
             ? <ContactList contacts={filtredList()}  />
-            : <Message>Сontact was not found</Message>)) ||
-            (contacts.length === 0 ? <Message>You don't have any contact</Message>
-            : <ContactList contacts={contacts} />)
+            : <Typography component="h2" variant="h3" sx={{mt:3, mb:2}}>Сontact was not found</Typography>)) ||
+            (contacts.length === 0 ? <Typography component="h2" variant="h3" sx={{mt:3, mb:2}}>You don't have any contact</Typography>
+            : <ContactList />)
             }
-        </Section>
-    </Container>
+        </Container>
+    </>
 };

@@ -1,4 +1,3 @@
-import { Form, FormTitle, FormInput, SubmitButton, ButtonWrapper } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/selectorsContacts';
 import toast, { Toaster } from 'react-hot-toast';
@@ -6,6 +5,15 @@ import { updateContact } from '../../redux/contacts/operationContacts';
 import { selectEditedContact } from 'redux/contacts/selectorsContacts';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import { showContactEditorSet } from 'redux/contacts/contactsSlice';
+import { Box, TextField, Button, Paper } from "@mui/material";
+import styled from '@emotion/styled'
+
+const ButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+`
 
 export function ModalForm() {
     const contacts = useSelector(selectContacts);
@@ -25,6 +33,7 @@ export function ModalForm() {
         if (isDublicate) {
             return toast.error(`You have contact with name ${updateContactName}`);
         };
+
         const updatedContact = { name: updateContactName, number: updateContactNumber, id: editedContact.id, };
         dispatch(showContactEditorSet(false));
         dispatch(updateContact(updatedContact));
@@ -36,19 +45,27 @@ export function ModalForm() {
         dispatch(setEditedContact({}));
     }
 
-    return <>
-        <Form onSubmit={submitForm}>
-            <FormTitle> Name </FormTitle>
-            <FormInput
-            type="text"
-            name="name"
-            defaultValue={editedContact.name}    
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
+    return <Paper>
+        <Box
+            sx={{p:3, width:300}}
+            display="flex"
+            flexDirection="column"
+            gap={3}
+            component="form"
+            alignSelf='flex-end'
+            onSubmit={submitForm}
+        >
+            <TextField
+                label="Name"
+                type="text"
+                name="name"
+                defaultValue={editedContact.name}    
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                required
             />
-            <FormTitle> Number </FormTitle>
-            <FormInput
+            <TextField
+                label="Number"
                 type="tel"
                 name="number"
                 defaultValue={editedContact.number}
@@ -57,10 +74,10 @@ export function ModalForm() {
                 required
                 />
             <ButtonWrapper>
-                <SubmitButton type='submit'>Save</SubmitButton>
-                <SubmitButton type='button' onClick={closeEdit}>Cancel</SubmitButton>
+                <Button type='submit' variant="contained" sx={{minWidth: 100}}>Save</Button>
+                <Button type='button' variant="contained" sx={{minWidth: 100}} onClick={closeEdit}>Cancel</Button>
             </ButtonWrapper>
-        </Form>
+        </Box>
         <Toaster toastOptions={{style: { fontSize: '24px', }}} />
-    </>
+    </Paper>
 };

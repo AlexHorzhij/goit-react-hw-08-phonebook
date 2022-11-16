@@ -1,7 +1,7 @@
-import { SelectTitle, SelectInput, FilterWrapper, Button } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'redux/filter/selectorsFilter';
 import setFilter from 'redux/filter/actionsFilter';
+import { TextField } from '@mui/material';
 
 export function Filter() {
     const serchName = useSelector(selectFilter);
@@ -12,15 +12,17 @@ export function Filter() {
         dispatch(setFilter(serchName));
     };
 
-    const clearSearch = () => {
-        dispatch(setFilter(""));
-    };
-
-
-    return <><SelectTitle> Find contacts by name</SelectTitle> 
-        <FilterWrapper>
-            <SelectInput type="text" name="serch" value={serchName} onChange={findContact} ></SelectInput>
-            <Button onClick={clearSearch}>X</Button>
-        </FilterWrapper>
+    return <>
+            <TextField label='Find contacts by name' type='search' fullWidth value={serchName} onChange={findContact} sx={{mb:2}}/>
         </>
 };
+
+
+
+        // <Typography component="h3" variant="h5">Find contacts by name</Typography>
+        // {/* <SelectTitle> Find contacts by name</SelectTitle>  */}
+        // <FilterWrapper>
+        //     <TextField label='Search' variant='standard' type='search' fullWidth value={serchName} onChange={findContact}/>
+        //     {/* <SelectInput type="text" name="serch" value={serchName} onChange={findContact} ></SelectInput>
+        //     <Button onClick={clearSearch}>X</Button> */}
+        // </FilterWrapper>

@@ -3,13 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from 'react-hot-toast';
 import { instanceContacts } from "services/Api/auth-service";
 
-// https://6358e7a7ff3d7bddb99383fc.mockapi.io/api
-// https://connections-api.herokuapp.com/
-
-// const instanceContacts = axios.create({
-//     baseURL: "https://6358e7a7ff3d7bddb99383fc.mockapi.io/api",
-// });
-
 export const fetchContacts = createAsyncThunk(
     "contacts/fetchAll",
     async (_, thunkAPI) => {
@@ -18,7 +11,7 @@ export const fetchContacts = createAsyncThunk(
             auth.token ? instanceContacts.defaults.headers.common['Authorization'] = auth.token
         : instanceContacts.defaults.headers.common['Authorization'] = '';
             const { data } = await instanceContacts.get("/contacts");
-                        return data;
+            return data;
         } catch (error) {
             thunkAPI.rejectWithValue(error);
         }
@@ -29,27 +22,13 @@ export const addContact = createAsyncThunk(
     "contacts/addContact",
     async (newContact, { rejectWithValue }) => {
         try {
-            console.log('newContact',newContact)
             const { data } = await instanceContacts.post("/contacts", newContact);
-            console.log('data',data)
             toast.success("Contact added")
             return data;
         } catch (error) {
             rejectWithValue(error);
         }
     },
-    // {
-    //     condition: (data, { getState }) => {
-    //         const { contacts } = getState();
-            
-    //         if (isDublicate(contacts, data)) {
-    //             console.log(data)
-    //             Notify.warning(`${data.name} is alrady in contacts`,
-    //                  { timeout: 4000, position: 'center-top', width: '400px', fontSize: '28px' })
-    //             return false;
-    //         };
-    //     },
-    // },
 );
 
 export const deleteContact = createAsyncThunk(
@@ -68,16 +47,18 @@ export const deleteContact = createAsyncThunk(
 export const updateContact = createAsyncThunk(
     "contacts/editContact",
     async (updatedContact, { rejectWithValue }) => {
+        const newContact = {
+            name: updatedContact.name,
+            number: updatedContact.number,
+        }
         try {
-            const { data } = await instanceContacts.put(`/contacts/${updatedContact.id}`, updatedContact);
+            const { data } = await instanceContacts.patch(`/contacts/${updatedContact.id}`, newContact);
             toast.success("Contact apdated")
-            console.log(data)
             return data;
         } catch (error) {
             rejectWithValue(error);
         }
     },
-
 );
 
 

@@ -1,10 +1,10 @@
-import { Form, FormTitle, FormInput, SubmitButton } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operationContacts';
 import { selectContacts } from 'redux/contacts/selectorsContacts';
 import toast, { Toaster } from 'react-hot-toast';
 import { isLoadingAdd } from 'redux/contacts/selectorsContacts';
-import { Oval } from 'react-loader-spinner';
+import { Box, TextField, Button, CircularProgress } from "@mui/material";
+
 
 export function ContactForm() {
     const contacts = useSelector(selectContacts);
@@ -30,8 +30,40 @@ export function ContactForm() {
     };
     
     return <>
+        <Box
+            onSubmit={submitForm}
+            component="form"
+            display="flex"
+            flexDirection="column"
+            gap={3} 
+        >
+            <TextField
+                fullWidth
+                id='name'
+                type='text'
+                label='Name'
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            />
+            <TextField
+                fullWidth
+                id='number'
+                type='tel'
+                label='Phone number'
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                required
+            />
+            <Button variant='contained' type='submit' fullWidth>
+                {isLoading && <CircularProgress />} Add contact</Button>
+        </Box>
+        <Toaster toastOptions={{style: { fontSize: '24px', }}} />
+
+
+        {/*         
         <Form onSubmit={submitForm}>
-            <FormTitle> Name </FormTitle>
+            <Form   Title> Name </Form>
             <FormInput
             type="text"
             name="name"
@@ -62,6 +94,6 @@ export function ContactForm() {
             strokeWidth={5}
                 strokeWidthSecondary={5} />}   Add contact</SubmitButton>
         </Form>
-        <Toaster toastOptions={{style: { fontSize: '24px', }}} />
+        <Toaster toastOptions={{style: { fontSize: '24px', }}} /> */}
     </>
 };

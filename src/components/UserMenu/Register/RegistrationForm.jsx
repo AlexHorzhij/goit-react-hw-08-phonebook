@@ -1,15 +1,14 @@
-import { Link } from "react-router-dom";
-import { TbArrowBigLeft } from "react-icons/tb";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { signup } from "redux/auth/operationAuth";
 import { selectIsLogin } from "redux/auth/authSelectors";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Box, TextField, Button, Container, Typography, Avatar, Link } from "@mui/material";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export function RegistrationForm() {
     const dispatch = useDispatch()
-        const isLogin = useSelector(selectIsLogin);
+    const isLogin = useSelector(selectIsLogin);
     const navigate = useNavigate();
 
     const singupNew = (e) => {
@@ -31,19 +30,62 @@ export function RegistrationForm() {
     }, [isLogin, navigate]);
 
     return <div>
-        <div>
-            <Link to="/login"><TbArrowBigLeft />Back</Link>
-            <Link to="/contacts"><TbArrowBigLeft/>Contacts</Link>
-        </div>        
-        <form onSubmit={singupNew}>
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="name"/>
-            <label htmlFor="login">Email</label>
-            <input type="mail" name="mail" id="login"/>
-            <label htmlFor="password">Password</label>
-            <input type="text" name="password" id="password"/>
-            <button type="submit">Submit</button>
-        </form>
+        <Container
+            sx={{
+            mt:2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',  
+            justifyContent:'center',            
+          }}>            
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+            Sign up
+            </Typography>
+            
+            <Box
+            display="flex"
+            flexDirection="column"
+            gap={2}
+                component="form"
+                            // alignSelf='flex-end'
+            sx={{
+                '& .MuiTextField-root': {mt: 1, mb: 1 }, mb: 2, width:'50%',
+            }}
+            noValidate
+            // autoComplete="off"
+            onSubmit={singupNew}>
+            <TextField
+                id="name"
+                label="Name"
+                type="text"
+                fullWidth
+                />
+                
+            <TextField
+                id="email"
+                label="Email"
+                    type="email"
+                fullWidth/> 
+                
+            <TextField
+                id="password"
+                label="Password"
+                    type="password"
+                fullWidth/>  
+                
+                <Button variant="contained" type="submit" fullWidth 
+                >Submit</Button>
+                <Link to="/login"
+            variant="body1"
+            component={NavLink}
+            alignSelf='flex-end'
+            >Already have an account? Sign in
+        </Link>
+        </Box>
+        </Container>
     </div>
 }
 
