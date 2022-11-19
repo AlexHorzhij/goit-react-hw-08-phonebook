@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { isLoadingFetch } from "redux/contacts/selectorsContacts";
 import { current } from "redux/auth/operationAuth";
@@ -16,12 +16,6 @@ export const App = () => {
   const dispatch = useDispatch();
 
     const isLogin = useSelector(selectToken);
-    // const navigate = useNavigate();
-
-  //  useEffect(() => {
-  //    isLogin ? navigate("/contacts") : navigate("/login")
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, []);
 
   useEffect(() => {
     if(isLogin){
