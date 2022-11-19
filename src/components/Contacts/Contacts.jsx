@@ -9,20 +9,25 @@ import { ContactList } from '../ContactList/ContactList';
 import { Logout } from 'components/UserMenu/Logout/Logout';
 import { Container, Typography, Divider } from '@mui/material';
 
+import { selectToken } from "redux/auth/authSelectors";
+
+
 export function Contacts() {
     const filter = useSelector(selectFilter);
     const contacts = useSelector(selectContacts);
     const dispatch = useDispatch();
+    const isLogin = useSelector(selectToken);
 
     useEffect(()=>{
-        dispatch(fetchContacts())
-    }, [dispatch]);
+        if(isLogin){dispatch(fetchContacts())}
+    }, [dispatch, isLogin]);
 
     const filtredList = () => {
         return filter ? contacts.filter((contact) => contact.name.toLowerCase().includes(filter.toLowerCase())) : '';
     };
 
     const contactsCount = () => {
+        console.log(contacts)
         return contacts.length;
     };
 
@@ -41,7 +46,7 @@ export function Contacts() {
             {(filter && (filtredList().length !== 0 
             ? <ContactList contacts={filtredList()}  />
             : <Typography component="h2" variant="h3" sx={{mt:3, mb:2}}>Сontact was not found</Typography>)) ||
-            (contacts.length === 0 ? <Typography component="h2" variant="h3" sx={{mt:3, mb:2}}>You don't have any contact</Typography>
+            (contacts.length === 0 ? <Typography component="h2" variant="h5" sx={{mt:3, mb:2}}>You don't have any contact</Typography>
             : <ContactList />)
             }
         </Container>

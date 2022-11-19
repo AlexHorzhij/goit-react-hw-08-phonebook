@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "redux/auth/operationAuth";
-import { selectIsLogin } from "redux/auth/authSelectors";
+import { selectToken } from "redux/auth/authSelectors";
 import { Box, TextField, Button, Container, Typography, Avatar, Link } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 
 export function Login() {
     const dispatch = useDispatch();
-    const isLogin = useSelector(selectIsLogin);
+    const isLogin = useSelector(selectToken);
     const navigate = useNavigate();
 
     const onLogin = (e) => {
@@ -19,7 +19,6 @@ export function Login() {
             email: form.elements.email.value,
             password: form.elements.password.value,
         };
-        form.reset();
         dispatch(login(user));
     };
 
@@ -78,15 +77,6 @@ export function Login() {
         </Link>
         </Box>       
         </Container>
+        {/* <Toaster toastOptions={{ style: { fontSize: '24px', } }}/> */}
     </div>
-    // <div>
-    //     <form onSubmit={onLogin}>
-    //         <label htmlFor="login">Email</label>
-    //         <input type="email" name="email" id="login" />
-    //         <label htmlFor="password">Password</label>
-    //         <input type="text" name="password" id="password" />
-    //         <button type="submit">Login</button>
-    //     </form>
-    //     <Link to="/register">Register</Link>
-    // </div>
 };

@@ -2,25 +2,25 @@ import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "redux/auth/operationAuth";
-import { selectIsLogin } from "redux/auth/authSelectors";
+import { selectToken } from "redux/auth/authSelectors";
 import { Box, TextField, Button, Container, Typography, Avatar, Link } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export function RegistrationForm() {
     const dispatch = useDispatch()
-    const isLogin = useSelector(selectIsLogin);
+    const isLogin = useSelector(selectToken);
     const navigate = useNavigate();
 
     const singupNew = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
+
         const newName = {
             name: form.elements.name.value,
-            email: form.elements.mail.value,
+            email: form.elements.email.value,
             password: form.elements.password.value,
         };
         dispatch(signup(newName));
-        form.reset();
     };
 
      useEffect(() => {
@@ -49,8 +49,7 @@ export function RegistrationForm() {
             display="flex"
             flexDirection="column"
             gap={2}
-                component="form"
-                            // alignSelf='flex-end'
+            component="form"
             sx={{
                 '& .MuiTextField-root': {mt: 1, mb: 1 }, mb: 2, width:'50%',
             }}

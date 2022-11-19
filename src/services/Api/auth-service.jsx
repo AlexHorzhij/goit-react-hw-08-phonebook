@@ -19,7 +19,6 @@ export const login = async (userLogin) => {
 
 export const logout = () => {
     const { data } = instanceContacts.post('/users/logout');
-    instanceContacts.defaults.headers.common['Authorization'] = '';
     return data;
 };
 

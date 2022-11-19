@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "redux/auth/operationAuth";
 import { selectUser } from "redux/auth/authSelectors";
-import { selectIsLogin } from "redux/auth/authSelectors";
+import { selectToken } from "redux/auth/authSelectors";
 import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 
 export function Logout() {
     const [anchorEl, setAnchorEl] = useState(null);
     const userName = useSelector(selectUser); 
-    const isLogin = useSelector(selectIsLogin);
+    const isLogin = useSelector(selectToken);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();

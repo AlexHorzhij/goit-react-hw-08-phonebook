@@ -11,6 +11,7 @@ export const fetchContacts = createAsyncThunk(
             auth.token ? instanceContacts.defaults.headers.common['Authorization'] = auth.token
         : instanceContacts.defaults.headers.common['Authorization'] = '';
             const { data } = await instanceContacts.get("/contacts");
+            console.log(data)
             return data;
         } catch (error) {
             thunkAPI.rejectWithValue(error);
@@ -53,7 +54,7 @@ export const updateContact = createAsyncThunk(
         }
         try {
             const { data } = await instanceContacts.patch(`/contacts/${updatedContact.id}`, newContact);
-            toast.success("Contact apdated")
+            toast.success("Contact updated")
             return data;
         } catch (error) {
             rejectWithValue(error);

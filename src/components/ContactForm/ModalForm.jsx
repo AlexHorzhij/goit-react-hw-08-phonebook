@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/selectorsContacts';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { updateContact } from '../../redux/contacts/operationContacts';
 import { selectEditedContact } from 'redux/contacts/selectorsContacts';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
@@ -78,6 +78,6 @@ export function ModalForm() {
                 <Button type='button' variant="contained" sx={{minWidth: 100}} onClick={closeEdit}>Cancel</Button>
             </ButtonWrapper>
         </Box>
-        <Toaster toastOptions={{style: { fontSize: '24px', }}} />
+        {/* <Toaster toastOptions={{style: { fontSize: '24px', }}} /> */}
     </Paper>
 };

@@ -9,7 +9,7 @@ const initialState = {
     isLogin: false,
     userName: '',
     loading: false,
-    error: '',
+    error: {},
 };
 
 const authSlice = createSlice({
@@ -43,11 +43,11 @@ const authSlice = createSlice({
             store.token = payload.token;
         },
         [login.rejected]: (store, { payload }) => {
+            store.isLogin = false;
             store.loading = false;
             store.error = payload.error;
         },
          [logout.pending]: (store) => {
-            store.isLogin = false;
             store.loading = true;
             store.error = '';
         },
@@ -62,7 +62,6 @@ const authSlice = createSlice({
             store.error = payload.error;
         },
         [current.pending]: (store) => {
-            store.isLogin = false;
             store.loading = true;
             store.error = '';
         },

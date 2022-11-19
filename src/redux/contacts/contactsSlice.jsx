@@ -29,6 +29,7 @@ export const contactsSlice = createSlice({
                 },
                 [fetchContacts.fulfilled]: (store, {payload}) => {
                         store.isLoadingFetch = false;
+                        console.log(payload)
                         store.items = payload;
                 },
                 [fetchContacts.rejected]: (store, {payload}) => {
@@ -40,8 +41,8 @@ export const contactsSlice = createSlice({
                         store.error = null;
                 },
                 [addContact.fulfilled]: (store, { payload }) => {
-                store.isLoadingAdd = false;
-                store.items.unshift(payload);
+                        store.isLoadingAdd = false;
+                        store.items.unshift(payload);
                 },
                 [addContact.rejected]: (store, {payload}) => {
                         store.isLoadingAdd = false;

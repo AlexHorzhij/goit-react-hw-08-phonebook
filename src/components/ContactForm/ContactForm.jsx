@@ -56,7 +56,7 @@ export function ContactForm() {
                 required
             />
             <Button variant='contained' type='submit' fullWidth>
-                {isLoading && <CircularProgress />} Add contact</Button>
+                {isLoading && <CircularProgress size="30px" clolor='#fff'/>} Add contact</Button>
         </Box>
         <Toaster toastOptions={{style: { fontSize: '24px', }}} />
 
